@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="com.gbpdma.test" project="GBPDMAtest" tests="2" started="2" failures="1" errors="0" ignored="0">
+  <testsuite name="HTC_Wildfir [emulator-5554]" time="0.166">
+    <testsuite name="com.gbpdma.test.xml" time="0.166">
+      <testcase name="testName " classname="com.gbpdma.test.xml" time="0.042">
+        <failure>junit.framework.AssertionFailedError: expected:&lt;[com.gbpdma.LocationPoint@43e68f38, com.gbpdma.LocationPoint@43e68f68, com.gbpdma.LocationPoint@43e68f98, com.gbpdma.LocationPoint@43e68fc8]&gt; but was:&lt;[com.gbpdma.LocationPoint@43e73630, com.gbpdma.LocationPoint@43e73a78, com.gbpdma.LocationPoint@43e73de0, com.gbpdma.LocationPoint@43e74178]&gt;&#13;
+at com.gbpdma.test.xml.testName(xml.java:51)&#13;
+at java.lang.reflect.Method.invokeNative(Native Method)&#13;
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:169)&#13;
+at android.test.AndroidTestRunner.runTest(AndroidTestRunner.java:154)&#13;
+at android.test.InstrumentationTestRunner.onStart(InstrumentationTestRunner.java:520)&#13;
+at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1447)&#13;
+&#13;
+</failure>
+      </testcase>
+      <testcase name="testAndroidTestCaseSetupProperly " classname="com.gbpdma.test.xml" time="0.075"/>
+    </testsuite>
+  </testsuite>
+</testrun>

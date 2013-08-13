@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="com.gbpdma.test" project="GBPDMAtest" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="HTC_Wildfir [emulator-5554]" time="0.192">
+    <testsuite name="com.gbpdma.test.xml" time="0.192">
+      <testcase name="testName " classname="com.gbpdma.test.xml" time="0.068"/>
+      <testcase name="testAndroidTestCaseSetupProperly " classname="com.gbpdma.test.xml" time="0.124"/>
+    </testsuite>
+  </testsuite>
+</testrun>
