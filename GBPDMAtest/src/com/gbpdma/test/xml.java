@@ -3,10 +3,10 @@ package com.gbpdma.test;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.gbpdma.FileHandler;
-import com.gbpdma.LocationPoint;
-import com.gbpdma.Map;
-import com.gbpdma.Polygon;
+import com.gbpdma.io.FileHandler;
+import com.gbpdma.logic.LocationPoint;
+import com.gbpdma.logic.Map;
+import com.gbpdma.logic.Polygon;
 
 import android.test.AndroidTestCase;
 
