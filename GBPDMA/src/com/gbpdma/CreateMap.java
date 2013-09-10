@@ -7,8 +7,10 @@ import java.util.TimerTask;
 
 import com.gbpdma.R;
 import com.gbpdma.location.GPS;
+import com.gbpdma.logic.LocationPoint;
 import com.gbpdma.logic.Map;
 import com.gbpdma.logic.Polygon;
+import com.gbpdma.io.FileHandler;
 
 import android.app.Activity;
 import android.location.LocationManager;
@@ -117,7 +119,7 @@ public class CreateMap extends Activity implements Observer{
 	}
 	
 	public void addBoundryPointClicked(View view) {
-		//new FileHandler(this).readFile();
+		map.boundary.points.add(new LocationPoint(gps.getLongitude(), gps.getLatitude()));
 	}
 	
 	public void addLandmarksClicked(View view) {
@@ -126,6 +128,7 @@ public class CreateMap extends Activity implements Observer{
 	}
 	
 	public void nextAfterLandmarkNameClicked(View view) {
+		map.landmarks.add(currentPolygon=new Polygon(landmarkNameBox.getText().toString()));
 		setContentView(R.layout.add_landmark_points);/* get TextView to display the GPS data */
 		txtInfo = (TextView) findViewById(R.id.textInfoInLandmarks);
 		timer=new Timer();
@@ -157,14 +160,15 @@ public class CreateMap extends Activity implements Observer{
 	}
 	
 	public void addLandmarkPointClicked(View view) {
-		//new FileHandler(this).readFile();
+		currentPolygon.points.add(new LocationPoint(gps.getLongitude(), gps.getLatitude()));
 	}
 	
 	public void newLandmarkClicked(View view) {
 		setContentView(R.layout.enter_landmark_name);
+		landmarkNameBox = (EditText) findViewById(R.id.editTextLandmarkName);
 	}
 	public void finishMapClicked(View view) {
-		
+		new FileHandler(this).writeFile(map, map.name);
 	}
 
 	@Override

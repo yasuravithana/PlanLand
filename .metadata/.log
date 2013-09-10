@@ -1021,3 +1021,21 @@ org.eclipse.debug.core.DebugException: Resource '/GBPDMA/src/com/gbpdma/ui/locat
 
 !ENTRY org.eclipse.core.resources 4 368 2013-09-08 14:37:21.914
 !MESSAGE Resource '/GBPDMA/src/com/gbpdma/ui/location/GPS.java' does not exist.
+!SESSION 2013-09-09 08:22:28.019 -----------------------------------------------
+eclipse.buildId=v22.0.1-685705
+java.version=1.7.0_13
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product com.android.ide.eclipse.adt.package.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2013-09-09 08:24:04.692
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Yasura'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.core.net 4 0 2013-09-09 08:24:31.474
+!MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'The proxy auto-configuration script could not be downloaded
+' #12167.

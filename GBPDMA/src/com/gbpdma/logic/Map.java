@@ -11,6 +11,7 @@ public class Map {
 	public Map(String name)
 	{
 		this.name = name;
+		boundary = new Polygon("boundary");
 		landmarks = new LinkedList<Polygon>();
 	}
 
