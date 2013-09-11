@@ -1,6 +1,7 @@
 package com.gbpdma;
 
 import com.gbpdma.R;
+import com.gbpdma.view.StartDraw;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -25,6 +26,12 @@ public class Welcome extends Activity {
 	
 	public void createMapClicked(View view) {
 		Intent intent = new Intent(this,CreateMap.class);
+	    startActivity(intent);
+	    
+	}
+	
+	public void viewMapClicked(View view) {
+		Intent intent = new Intent(this,StartDraw.class);
 	    startActivity(intent);
 	    
 	}

@@ -13,8 +13,12 @@
 <fullyQualifiedTypeName name="java.util.TimerTask"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.Double"/>
-<fullyQualifiedTypeName name="com.gbpdma.logic.LocationPoint"/>
 <fullyQualifiedTypeName name="java.util.logging.FileHandler"/>
+<fullyQualifiedTypeName name="com.gbpdma.test.MapProcessor"/>
+<fullyQualifiedTypeName name="com.gbpdma.view.StartDraw"/>
+<fullyQualifiedTypeName name="com.gbpdma.logic.Map"/>
 <fullyQualifiedTypeName name="com.gbpdma.io.FileHandler"/>
+<fullyQualifiedTypeName name="com.gbpdma.logic.LocationPoint"/>
+<fullyQualifiedTypeName name="com.gbpdma.logic.MapProcessor"/>
 <fullyQualifiedTypeName name="com.gbpdma.logic.Polygon"/>
 </qualifiedTypeNameHistroy>

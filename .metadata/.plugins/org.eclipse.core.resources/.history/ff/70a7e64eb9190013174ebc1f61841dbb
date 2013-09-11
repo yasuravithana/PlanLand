@@ -1,0 +1,28 @@
+package com.gbpdma.logic;
+
+public class MapProcessor
+{
+	static final int earthRadius =1000;
+	public static void setCoordinates(Map map)
+	{
+		setCoordinates(map.boundary);
+		for (Polygon landmark : map.landmarks)
+		{
+			setCoordinates(landmark);
+		}
+	}
+	
+	private static void setCoordinates(Polygon polygon)
+	{
+		for (LocationPoint point : polygon.points)
+		{
+			setCoordinates(point);
+		}
+	}
+	
+	private static void setCoordinates(LocationPoint point)
+	{
+		point.setX(Math.toRadians(point.getLongitude())*earthRadius);
+		point.setY(Math.toRadians(point.getLatitude())*earthRadius);
+	}
+}

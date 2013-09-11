@@ -23,4 +23,14 @@
         android:onClick="createMapClicked"
         android:text="Create Map" />
 
+    <Button
+        android:id="@+id/buttonViewMap"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="141dp"
+        android:onClick="viewMapClicked"
+        android:text="View Map" />
+
 </RelativeLayout>

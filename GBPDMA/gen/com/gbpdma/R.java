@@ -24,22 +24,23 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000f;
+        public static final int action_settings=0x7f080010;
         public static final int button2=0x7f080001;
-        public static final int buttonAddBoundryPoint=0x7f080003;
-        public static final int buttonAddLandmarkPoint=0x7f080006;
-        public static final int buttonAddLandmarks=0x7f080004;
-        public static final int buttonFinishMap=0x7f080008;
-        public static final int buttonNewLandMark=0x7f080007;
-        public static final int buttonNextAfterLandmarkName=0x7f08000b;
-        public static final int buttonNextAfterMapName=0x7f08000e;
-        public static final int editText1=0x7f08000d;
-        public static final int editTextLandmarkName=0x7f08000a;
-        public static final int textInfo=0x7f080002;
-        public static final int textInfoInLandmarks=0x7f080005;
+        public static final int buttonAddBoundryPoint=0x7f080004;
+        public static final int buttonAddLandmarkPoint=0x7f080007;
+        public static final int buttonAddLandmarks=0x7f080005;
+        public static final int buttonFinishMap=0x7f080009;
+        public static final int buttonNewLandMark=0x7f080008;
+        public static final int buttonNextAfterLandmarkName=0x7f08000c;
+        public static final int buttonNextAfterMapName=0x7f08000f;
+        public static final int buttonViewMap=0x7f080002;
+        public static final int editText1=0x7f08000e;
+        public static final int editTextLandmarkName=0x7f08000b;
+        public static final int textInfo=0x7f080003;
+        public static final int textInfoInLandmarks=0x7f080006;
         public static final int textView1=0x7f080000;
-        public static final int textViewInLandmarkName=0x7f080009;
-        public static final int textViewInMapName=0x7f08000c;
+        public static final int textViewInLandmarkName=0x7f08000a;
+        public static final int textViewInMapName=0x7f08000d;
     }
     public static final class layout {
         public static final int activity_welcome=0x7f030000;
