@@ -1,7 +1,7 @@
 package com.gbpdma;
 
 import com.gbpdma.R;
-import com.gbpdma.view.StartDraw;
+import com.gbpdma.view.SelectFile;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -31,7 +31,7 @@ public class Welcome extends Activity {
 	}
 	
 	public void viewMapClicked(View view) {
-		Intent intent = new Intent(this,StartDraw.class);
+		Intent intent = new Intent(this,SelectFile.class);
 	    startActivity(intent);
 	    
 	}

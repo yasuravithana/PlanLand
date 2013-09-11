@@ -21,4 +21,18 @@
 <fullyQualifiedTypeName name="com.gbpdma.logic.LocationPoint"/>
 <fullyQualifiedTypeName name="com.gbpdma.logic.MapProcessor"/>
 <fullyQualifiedTypeName name="com.gbpdma.logic.Polygon"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.content.pm.PackageManager"/>
+<fullyQualifiedTypeName name="com.gbpdma.view.SelectFile"/>
+<fullyQualifiedTypeName name="android.widget.ListView"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="android.widget.ArrayAdapter"/>
+<fullyQualifiedTypeName name="android.app.ListActivity"/>
+<fullyQualifiedTypeName name="com.gbpdma.R"/>
+<fullyQualifiedTypeName name="com.gbpdma.R.id"/>
+<fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="android.R.id"/>
+<fullyQualifiedTypeName name="android.widget.AdapterView"/>
+<fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
 </qualifiedTypeNameHistroy>

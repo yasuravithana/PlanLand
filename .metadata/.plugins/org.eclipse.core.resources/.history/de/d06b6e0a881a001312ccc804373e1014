@@ -1,0 +1,30 @@
+package com.gbpdma.view;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import com.gbpdma.io.FileHandler;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+
+public class StartDraw extends Activity {
+    DrawView drawView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        try
+		{
+			drawView = new DrawView(this,new FileHandler(this).readFile("yasura"));
+		} catch (XmlPullParserException e)
+		{
+			e.printStackTrace();
+			return;
+		}
+        drawView.setBackgroundColor(Color.WHITE);
+        setContentView(drawView);
+
+    }
+}

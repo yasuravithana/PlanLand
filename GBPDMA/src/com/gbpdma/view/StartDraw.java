@@ -15,9 +15,11 @@ public class StartDraw extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle b = getIntent().getExtras();
+        
         try
 		{
-			drawView = new DrawView(this,new FileHandler(this).readFile("yasura"));
+			drawView = new DrawView(this,new FileHandler(this).readFile(b.getString("file")));
 		} catch (XmlPullParserException e)
 		{
 			e.printStackTrace();

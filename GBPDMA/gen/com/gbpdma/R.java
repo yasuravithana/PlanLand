@@ -43,19 +43,23 @@ public final class R {
         public static final int textViewInMapName=0x7f08000d;
     }
     public static final class layout {
-        public static final int activity_welcome=0x7f030000;
-        public static final int add_boundary_points=0x7f030001;
-        public static final int add_landmark_points=0x7f030002;
-        public static final int enter_landmark_name=0x7f030003;
-        public static final int enter_map_name=0x7f030004;
+        public static final int activity_select_file=0x7f030000;
+        public static final int activity_welcome=0x7f030001;
+        public static final int add_boundary_points=0x7f030002;
+        public static final int add_landmark_points=0x7f030003;
+        public static final int enter_landmark_name=0x7f030004;
+        public static final int enter_map_name=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f070000;
-        public static final int welcome=0x7f070001;
+        public static final int select_file=0x7f070001;
+        public static final int welcome=0x7f070002;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
+        public static final int hello_world=0x7f050005;
+        public static final int title_activity_select_file=0x7f050004;
         public static final int title_activity_welcome=0x7f050003;
         public static final int welcome_message=0x7f050002;
     }

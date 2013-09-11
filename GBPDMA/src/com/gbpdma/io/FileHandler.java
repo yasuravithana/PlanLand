@@ -1,5 +1,6 @@
 package com.gbpdma.io;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,6 +16,7 @@ import com.gbpdma.logic.Map;
 import com.gbpdma.logic.Polygon;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Xml;
 
 public class FileHandler
@@ -28,6 +30,7 @@ public class FileHandler
 	{
 
 		context = activity;
+		
 
 	}
 
