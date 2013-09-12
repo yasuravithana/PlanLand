@@ -1,6 +1,7 @@
 package com.gbpdma;
 
 import com.gbpdma.R;
+import com.gbpdma.logic.CreatePlan;
 import com.gbpdma.view.SelectFile;
 
 import android.os.Bundle;
@@ -9,31 +10,38 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 
+/**
+ * @author yasuravithana
+ * 
+ */
+// This class handles the Welcome activity of the application.
 public class Welcome extends Activity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_welcome);
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_welcome);// loading layout
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.welcome, menu);
-		return true;
-	}
-	
-	public void createMapClicked(View view) {
-		Intent intent = new Intent(this,CreateMap.class);
-	    startActivity(intent);
-	    
-	}
-	
-	public void viewMapClicked(View view) {
-		Intent intent = new Intent(this,SelectFile.class);
-	    startActivity(intent);
-	    
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+	// Inflate the menu; this adds items to the action bar if it is present.
+	getMenuInflater().inflate(R.menu.welcome, menu);
+	return true;
+    }
+
+    // Handles the event when the user clicks Create Plan
+    public void createPlanClicked(View view) {
+	Intent intent = new Intent(this, CreatePlan.class);// Create the Create Plan intent
+	startActivity(intent);
+
+    }
+
+    // Handles the event when the user clicks View Plan
+    public void viewMapClicked(View view) {
+	Intent intent = new Intent(this, SelectFile.class);// Create the WeCreatelome Plan intent
+	startActivity(intent);
+
+    }
 
 }

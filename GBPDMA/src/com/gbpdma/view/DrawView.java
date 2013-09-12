@@ -1,7 +1,7 @@
 package com.gbpdma.view;
 
 import com.gbpdma.logic.LocationPoint;
-import com.gbpdma.logic.Map;
+import com.gbpdma.logic.Plan;
 import com.gbpdma.logic.MapProcessor;
 import com.gbpdma.logic.Polygon;
 
@@ -9,118 +9,152 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.WindowManager;
 
-public class DrawView extends View {
-    Paint paint = new Paint();
-    private ScaleGestureDetector mScaleDetector;
-    private float mScaleFactor = 10f;
-    private float refx=0,refy=0,dx=0,dy=0;
-    private float angle=0f;
-//    private float currentX=-8884, currentY=-755;
-    private float currentX=0, currentY=0;
-    Boolean shouldScale=true;
-    int screenHalfWidth,screenHalfHeight;
-    Map map;
-    LocationPoint previousPoint;
-    
+/**
+ * @author yasuravithana
+ * 
+ */
+public class DrawView extends View implements SensorEventListener {
+    // This is the view that draws a plan. It extends SensorEventListener since it updates rotation of the map according to the orientation of the device
 
-    public DrawView(Context context, Map map) {
-        super(context);  
-        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        screenHalfWidth = display.getWidth()/2;
-        screenHalfHeight = display.getHeight()/2;
-        currentX=screenHalfWidth;
-        currentY=screenHalfHeight;
-        MapProcessor.setCoordinates(map);
-        this.map=map;
-        
+    // variables to hold references to objects needed in sensing orientation
+    private SensorManager mSensorManager;
+    private Sensor mCompass;
+
+    Paint paint = new Paint();
+    private ScaleGestureDetector mScaleDetector;// used to capture pinch event
+    private float mScaleFactor = 10f;// this is the scale factor of the plan. At startup it is at this value.
+    private float refx = 0, refy = 0,// x & y on screen when the user touches it
+	    dx = 0, dy = 0;// difference in x & y used for drag event
+    private float angle = 0f;// rotation angle of the map
+    private float currentX = 0, currentY = 0;// current positioning of the canvas
+    int screenHalfWidth, screenHalfHeight;// variables to hold screen half dimensions used to find screen center
+    Plan plan;// the plan being drawn
+    LocationPoint previousPoint;// holds the previous point to connect the next point
+
+    // constructor
+    public DrawView(Context context, Plan map) {
+	super(context);
+	mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+
+	// obtain screen size
+	WindowManager wm = (WindowManager) context
+		.getSystemService(Context.WINDOW_SERVICE);
+	Display display = wm.getDefaultDisplay();
+	screenHalfWidth = display.getWidth() / 2;
+	screenHalfHeight = display.getHeight() / 2;
+
+	// center the plan at startup
+	currentX = screenHalfWidth;
+	currentY = screenHalfHeight;
+
+	// process the map to get xy coordinates to use for drawing
+	MapProcessor.setCoordinates(map);
+	this.plan = map;
+
+	// Setting to capture compass events
+	mSensorManager = (SensorManager) context
+		.getSystemService(context.SENSOR_SERVICE);
+	mCompass = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+	mSensorManager.registerListener(this, mCompass,
+		SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     @Override
     public void onDraw(Canvas canvas) {
-    	
-    	canvas.rotate(angle,100,100);
-        canvas.translate(currentX+=(dx)/mScaleFactor, currentY+=(dy)/mScaleFactor);
-    	canvas.scale(mScaleFactor, mScaleFactor,screenHalfWidth-currentX,screenHalfHeight-currentY);
 
-    	
-    	//drawing boundary
-        paint.setColor(Color.RED);
-        paint.setStrokeWidth(2/mScaleFactor);
-        
-        previousPoint=map.boundary.points.getLast();
-        for(LocationPoint point : map.boundary.points)
-        {
-        	canvas.drawLine(previousPoint.getX(), previousPoint.getY(), point.getX(), point.getY(), paint);
-        	previousPoint = point;
-        }
-        
-        //drawing landmarks
-        paint.setColor(Color.BLACK);
-        for(Polygon landmark : map.landmarks)
-        {
-        	previousPoint=landmark.points.getLast();
-        	for(LocationPoint point : landmark.points)
-        	{
-        		canvas.drawLine(previousPoint.getX(), previousPoint.getY(), point.getX(), point.getY(), paint);
-        		previousPoint = point;
-        	}
-        }
+	//positioning the canvas
+	canvas.translate(currentX += (dx) / mScaleFactor, currentY += (dy)
+		/ mScaleFactor);
+	dx = dy = 0;
+	//scaling the canvas
+	canvas.scale(mScaleFactor, mScaleFactor, screenHalfWidth - currentX,
+		screenHalfHeight - currentY);
+	//rotating the canvas
+	canvas.rotate(angle);// rotation is done around the center of the boarder as calculated by the MapProcessor
+
+	// drawing boundary
+	paint.setColor(Color.RED);
+	paint.setStrokeWidth(2 / mScaleFactor);
+	paint.setAntiAlias(true);
+
+	previousPoint = plan.boundary.points.getLast();//the last point point will be connected to the first 
+	for (LocationPoint point : plan.boundary.points) {//for each point in boundary
+	    canvas.drawLine(previousPoint.getX(), previousPoint.getY(), point
+		    .getX(), point.getY(), paint);//connect this point with the previous
+	    previousPoint = point;//advance to the next points pair
+	}
+
+	// drawing landmarks
+	paint.setColor(Color.BLACK);//set the brush color
+	for (Polygon landmark : plan.landmarks) {//for each landmark
+	    previousPoint = landmark.points.getLast();//the last point point will be connected to the first 
+	    for (LocationPoint point : landmark.points) {//for each point in landmark
+		canvas.drawLine(previousPoint.getX(), previousPoint.getY(),
+			point.getX(), point.getY(), paint);//connect this point with the previous
+		previousPoint = point;//advance to the next points pair
+	    }
+	}
 
     }
-    
-    private class ScaleListener 
-    extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-@Override
-public boolean onScale(ScaleGestureDetector detector) {
-    mScaleFactor *= detector.getScaleFactor();
-    shouldScale=true;
 
-    // Don't let the object get too small or too large.
-    //mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
+    //inner class for the scale detector
+    private class ScaleListener extends
+	    ScaleGestureDetector.SimpleOnScaleGestureListener {
+	@Override
+	public boolean onScale(ScaleGestureDetector detector) {
+	    mScaleFactor *= detector.getScaleFactor();//increase or decrease scale according to the event
 
-    invalidate();
-    return true;
-}
-}
-    
+	    invalidate();// mark that a redraw is necessary
+	    return true;
+	}
+    }
+
     public boolean onTouchEvent(MotionEvent ev) {
-        // Let the ScaleGestureDetector inspect all events.
-        mScaleDetector.onTouchEvent(ev);
-        
-        if(ev.getAction()==MotionEvent.ACTION_DOWN)
-        {
-        	refx=ev.getRawX();
-        	refy=ev.getRawY();
-        }
-        if(ev.getAction()==MotionEvent.ACTION_MOVE)
-        {
-        	float angleInRad=(float) (angle*Math.PI/180);
-//        	dy=(float) ((ev.getRawX()-refx)*Math.sin(angleInRad)+(ev.getRawY()-refy)*Math.cos(angleInRad));
-//        	dx=(float) ((ev.getRawY()-refy)*Math.cos(angleInRad)-(ev.getRawX()-refx)*Math.sin(angleInRad));
+	// Let the ScaleGestureDetector inspect all events.
+	mScaleDetector.onTouchEvent(ev);
 
+	if (ev.getActionMasked() == MotionEvent.ACTION_DOWN) {//when user touches
+	    //setting the reference xy values
+	    refx = ev.getRawX();
+	    refy = ev.getRawY();
+	}
+	if (ev.getActionMasked() == MotionEvent.ACTION_MOVE) {//when user drags
 
-//        	double a = Math.atan((ev.getRawY()-refy)/(ev.getRawX()-refx))-angleInRad;
-//        	double l =Math.sqrt((ev.getRawY()-refy)*(ev.getRawY()-refy)+(ev.getRawX()-refx)*(ev.getRawX()-refx));
-//        	if(!Double.isNaN(a))
-//        	{
-//	        	dx=(float) (l*Math.cos(a));
-//	        	dy=(float) (l*Math.sin(a));
-//        	}
-        	
-        	dx=(ev.getRawX()-refx);
-        	dy=(ev.getRawY()-refy);
-        	refx=ev.getRawX();
-        	refy=ev.getRawY();
-        	invalidate();
-        }
-        return true;
+	    //calculate drag distances
+	    dx = (ev.getRawX() - refx);
+	    dy = (ev.getRawY() - refy);
+	    
+	    //resetting the reference xy values
+	    refx = ev.getRawX();
+	    refy = ev.getRawY();
+	    invalidate();// mark that a redraw is necessary
+	}
+	return true;
     }
+
+    @Override
+    public void onAccuracyChanged(Sensor arg0, int arg1) {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    //when the orientation changes, update angle accordingly
+    public void onSensorChanged(SensorEvent arg0) {
+	angle = 360 - arg0.values[0];
+	invalidate();// mark that a redraw is necessary
+    }
+
 }

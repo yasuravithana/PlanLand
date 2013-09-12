@@ -1,0 +1,164 @@
+package com.gbpdma.view;
+
+import com.gbpdma.logic.LocationPoint;
+import com.gbpdma.logic.Map;
+import com.gbpdma.logic.MapProcessor;
+import com.gbpdma.logic.Polygon;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.util.Log;
+import android.view.Display;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.View;
+import android.view.WindowManager;
+
+public class DrawView extends View implements SensorEventListener {
+	
+	private SensorManager mSensorManager;
+	private Sensor mCompass;
+	
+    Paint paint = new Paint();
+    private ScaleGestureDetector mScaleDetector;
+    private float mScaleFactor = 10f;
+    private float refx=0,refy=0,dx=0,dy=0;
+    private float angle=0f;
+//    private float currentX=-8884, currentY=-755;
+    private float currentX=0, currentY=0;
+    Boolean shouldScale=true;
+    int screenHalfWidth,screenHalfHeight;
+    Map map;
+    LocationPoint previousPoint;
+    
+
+    public DrawView(Context context, Map map) {
+        super(context);  
+        mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        screenHalfWidth = display.getWidth()/2;
+        screenHalfHeight = display.getHeight()/2;
+        currentX=screenHalfWidth;
+        currentY=screenHalfHeight;
+        MapProcessor.setCoordinates(map);
+        this.map=map;
+        
+        mSensorManager = (SensorManager)context.getSystemService(context.SENSOR_SERVICE);
+        mCompass = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+
+	    mSensorManager.registerListener(this, mCompass, SensorManager.SENSOR_DELAY_FASTEST);
+	
+        
+    }
+
+    @Override
+    public void onDraw(Canvas canvas) {
+    	
+        canvas.translate(currentX+=(dx)/mScaleFactor, currentY+=(dy)/mScaleFactor);
+    	canvas.scale(mScaleFactor, mScaleFactor,screenHalfWidth-currentX,screenHalfHeight-currentY);
+    	//canvas.rotate(angle,screenHalfWidth-currentX,screenHalfHeight-currentY);
+    	canvas.rotate(angle);
+
+    	
+    	//drawing boundary
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(2/mScaleFactor);
+        
+        previousPoint=map.boundary.points.getLast();
+        for(LocationPoint point : map.boundary.points)
+        {
+        	canvas.drawLine(previousPoint.getX(), previousPoint.getY(), point.getX(), point.getY(), paint);
+        	previousPoint = point;
+        }
+        
+        //drawing landmarks
+        paint.setColor(Color.BLACK);
+        for(Polygon landmark : map.landmarks)
+        {
+        	previousPoint=landmark.points.getLast();
+        	for(LocationPoint point : landmark.points)
+        	{
+        		canvas.drawLine(previousPoint.getX(), previousPoint.getY(), point.getX(), point.getY(), paint);
+        		previousPoint = point;
+        	}
+        }
+
+    }
+    
+    private class ScaleListener 
+    extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+@Override
+public boolean onScale(ScaleGestureDetector detector) {
+    mScaleFactor *= detector.getScaleFactor();
+    shouldScale=true;
+
+    // Don't let the object get too small or too large.
+    //mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f));
+
+    invalidate();
+    return true;
+}
+}
+    
+    int test=0;
+    
+    public boolean onTouchEvent(MotionEvent ev) {
+        // Let the ScaleGestureDetector inspect all events.
+        mScaleDetector.onTouchEvent(ev);
+        
+        if(ev.getActionMasked()==MotionEvent.ACTION_DOWN)
+        {
+        	refx=ev.getRawX();
+        	refy=ev.getRawY();
+        }
+        if(ev.getActionMasked()==MotionEvent.ACTION_MOVE)
+        {
+        	test++;
+        	if(test>20)
+        	{
+        		Log.d("", "");
+        	}
+//        	float angleInRad=(float) (angle*Math.PI/180);
+//        	dy=(float) ((ev.getRawX()-refx)*Math.sin(angleInRad)+(ev.getRawY()-refy)*Math.cos(angleInRad));
+//        	dx=(float) ((ev.getRawY()-refy)*Math.cos(angleInRad)-(ev.getRawX()-refx)*Math.sin(angleInRad));
+
+
+//        	double a = Math.atan((ev.getRawY()-refy)/(ev.getRawX()-refx))-angleInRad;
+//        	double l =Math.sqrt((ev.getRawY()-refy)*(ev.getRawY()-refy)+(ev.getRawX()-refx)*(ev.getRawX()-refx));
+//        	if(!Double.isNaN(a))
+//        	{
+//	        	dx=(float) (l*Math.cos(a));
+//	        	dy=(float) (l*Math.sin(a));
+//        	}
+        	
+        	dx=(ev.getRawX()-refx);
+        	dy=(ev.getRawY()-refy);
+        	refx=ev.getRawX();
+        	refy=ev.getRawY();
+        	invalidate();
+        }
+        return true;
+    }
+
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent arg0)
+	{
+		angle = 360-arg0.values[0];
+		invalidate();
+	}
+	
+}

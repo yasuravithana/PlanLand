@@ -8,25 +8,30 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 
+/**
+ * @author yasuravithana
+ *
+ */
 public class StartDraw extends Activity {
-    DrawView drawView;
+//this class is related to the activity which draws the plan
+    
+    DrawView drawView;//this is that view that draws the plan
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	super.onCreate(savedInstanceState);
 
-        Bundle b = getIntent().getExtras();
-        
-        try
-		{
-			drawView = new DrawView(this,new FileHandler(this).readFile(b.getString("file")));
-		} catch (XmlPullParserException e)
-		{
-			e.printStackTrace();
-			return;
-		}
-        drawView.setBackgroundColor(Color.WHITE);
-        setContentView(drawView);
+	Bundle b = getIntent().getExtras();//get the additional parameters passed at the creation of the intent
+
+	try {
+	    drawView = new DrawView(this, new FileHandler(this).readFile(b
+		    .getString("file")));//instantiate the view that draws the plan
+	} catch (XmlPullParserException e) {
+	    e.printStackTrace();
+	    return;
+	}
+	drawView.setBackgroundColor(Color.LTGRAY);//set background color of the view
+	setContentView(drawView);//make it the current view
 
     }
 }

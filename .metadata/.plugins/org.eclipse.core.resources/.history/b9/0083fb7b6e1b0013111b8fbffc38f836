@@ -1,0 +1,22 @@
+package com.gbpdma.logic;
+
+import java.util.LinkedList;
+
+/**
+ * @author yasuravithana
+ *
+ */
+public class Plan {
+//this class is the template for a plan which consists of a boundary and a set of landmarks
+    
+    public String name;//name of the plan
+    public Polygon boundary;//polygon which holds points of the boundary
+    public LinkedList<Polygon> landmarks;//set of landmarks in the plan
+
+    public Plan(String name) {
+	this.name = name;
+	boundary = new Polygon("boundary");
+	landmarks = new LinkedList<Polygon>();
+    }
+
+}

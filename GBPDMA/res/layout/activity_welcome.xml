@@ -20,8 +20,8 @@
         android:layout_height="50dp"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="47dp"
-        android:onClick="createMapClicked"
-        android:text="Create Map" />
+        android:onClick="createPlanClicked"
+        android:text="Create New Plan" />
 
     <Button
         android:id="@+id/buttonViewMap"
@@ -31,6 +31,6 @@
         android:layout_below="@+id/textView1"
         android:layout_marginTop="141dp"
         android:onClick="viewMapClicked"
-        android:text="View Map" />
+        android:text="View Saved Plan" />
 
 </RelativeLayout>

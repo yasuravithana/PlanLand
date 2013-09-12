@@ -5,7 +5,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.gbpdma.io.FileHandler;
 import com.gbpdma.logic.LocationPoint;
-import com.gbpdma.logic.Map;
+import com.gbpdma.logic.Plan;
 import com.gbpdma.logic.Polygon;
 
 import android.test.AndroidTestCase;
@@ -21,7 +21,7 @@ public class xml extends AndroidTestCase {
 //		Activity welcome = new Welcome();
 //		Intent intent = new Intent(welcome,CreateMap.class);
 //		 welcome.startActivity(intent);
-		Map map = new Map("test");
+		Plan map = new Plan("test");
 		LocationPoint p1= new LocationPoint(0,0);
 		LocationPoint p2= new LocationPoint(100,0);
 		LocationPoint p3= new LocationPoint(100,100);
@@ -46,7 +46,7 @@ public class xml extends AndroidTestCase {
 		
 		new FileHandler(getContext()).writeFile(map, "abcd");
 		
-		Map map1 = new FileHandler(getContext()).readFile("abcd");
+		Plan map1 = new FileHandler(getContext()).readFile("abcd");
 		
 		assertEquals(map.boundary.points, map1.boundary.points);
 		

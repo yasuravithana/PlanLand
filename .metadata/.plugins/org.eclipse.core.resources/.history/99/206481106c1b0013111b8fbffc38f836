@@ -1,0 +1,43 @@
+package com.gbpdma.logic;
+
+/**
+ * @author yasuravithana
+ * 
+ */
+public class MapProcessor {// this class provides the necessary facilities
+    static final int earthRadius = 6371;// earth radius in km
+    static double centerLongitude = 0, centerLatitude = 0;// variables holding the location of the center of the plan
+
+    public static void setCoordinates(Plan map) {
+	getCenter(map);
+	setCoordinates(map.boundary);
+	for (Polygon landmark : map.landmarks) {
+	    setCoordinates(landmark);
+	}
+    }
+
+    public static void setCoordinates(Polygon polygon) {
+	for (LocationPoint point : polygon.points) {
+	    setCoordinates(point);
+	}
+    }
+
+    public static void setCoordinates(LocationPoint point) {
+	// point.setX((float)(Math.toRadians(point.getLongitude())*earthRadius));
+	// point.setY((float)(Math.toRadians(point.getLatitude())*earthRadius));
+	point.setX((float) (Math.toRadians(point.getLongitude()
+		- centerLongitude) * earthRadius) * 1000);
+	point.setY(-(float) (Math.toRadians(point.getLatitude()
+		- centerLatitude) * earthRadius) * 1000);
+    }
+
+    public static void getCenter(Plan map) {
+	double sumLongitudes = 0, sumLatitudes = 0;
+	for (LocationPoint point : map.boundary.points) {
+	    sumLongitudes += point.getLongitude();
+	    sumLatitudes += point.getLatitude();
+	}
+	centerLongitude = sumLongitudes / map.boundary.points.size();
+	centerLatitude = sumLatitudes / map.boundary.points.size();
+    }
+}

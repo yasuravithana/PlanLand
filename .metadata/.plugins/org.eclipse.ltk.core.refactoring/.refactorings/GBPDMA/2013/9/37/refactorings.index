@@ -8,3 +8,16 @@
 1378793565132	Rename field 'lastPoint'
 1378862041624	Move compilation unit
 1378863144395	Rename field 'listViewFiles'
+1378914949771	Rename type 'CreateMap'
+1378915311972	Rename type 'Map'
+1378915355920	Rename field 'map'
+1378916053846	Rename method 'nextAfterMapNameClicked'
+1378917422443	Rename method 'finishMapClicked'
+1378917752768	Delete element
+1378917945680	Rename method 'createMapClicked'
+1378945711738	Move compilation unit
+1378945964356	Rename local variable 'map'
+1378946712708	Rename local variable 'map'
+1378963605359	Rename local variable 'map'
+1378965362638	Delete element
+1378973189943	Rename field 'map'

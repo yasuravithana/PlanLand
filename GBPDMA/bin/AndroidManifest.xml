@@ -14,21 +14,25 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"  >
         <activity
-            android:name="com.gbpdma.CreateMap"
+            android:name="com.gbpdma.logic.CreatePlan"
             android:configChanges="orientation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+        	android:screenOrientation="portrait"
+        	android:noHistory="true" >
         </activity>
         <activity
             android:name="com.gbpdma.view.StartDraw"
             android:configChanges="orientation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+        	android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.gbpdma.Welcome"
             android:configChanges="orientation"
-            android:label="@string/title_activity_welcome" >
+            android:label="@string/title_activity_welcome" 
+        	android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +41,8 @@
         </activity>
         <activity
             android:name="com.gbpdma.view.SelectFile"
-            android:label="@string/title_activity_select_file" >
+            android:label="@string/title_activity_select_file"  
+        	android:screenOrientation="portrait" >
         </activity>
     </application>
 

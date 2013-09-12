@@ -1,0 +1,228 @@
+package com.gbpdma.io;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlSerializer;
+
+import com.gbpdma.logic.LocationPoint;
+import com.gbpdma.logic.Plan;
+import com.gbpdma.logic.Polygon;
+
+import android.content.Context;
+import android.util.Log;
+import android.util.Xml;
+
+/**
+ * @author yasuravithana
+ *
+ */
+public class FileHandler
+{//This class take care of storing a Plan object in to the memory as an XML file and loading a Plan object from a stored XML file.
+
+	Context				context;// this will hold the current context
+
+	public FileHandler(Context activity)// constructor
+	{
+		context = activity;
+	}
+
+	//takes a Plan object and write an XML file with the specified name.
+	public void writeFile(Plan plan, String name)
+	{
+		FileOutputStream fileos = null;//stream used to write the file
+		try
+		{
+			fileos = context.openFileOutput(name + ".xml", android.content.Context.MODE_PRIVATE);//opens the XML file
+		} catch (FileNotFoundException e)
+		{
+			
+		}
+		//create a XmlSerializer in order to write xml data
+		XmlSerializer serializer = Xml.newSerializer();
+		try
+		{
+			// set the FileOutputStream as output for the serializer, using UTF-8 encoding
+			serializer.setOutput(fileos, "UTF-8");
+			// Write <?xml declaration with encoding (if encoding not null) and standalone flag (if standalone not null)
+			serializer.startDocument(null, Boolean.valueOf(true));
+			// set indentation option
+			serializer.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+			// start a tag called "map"
+			serializer.startTag(null, "map");
+			//add name attribute
+			serializer.attribute(null, "name", plan.name);
+
+			// start a tag called "boundary"
+			serializer.startTag(null, "boundary");
+			//add name attribute
+			serializer.attribute(null, "name", plan.boundary.getName() );
+
+			//Adding points to the map
+			for (LocationPoint point : plan.boundary.points)//for each point in boundary
+			{
+				serializer.startTag(null, "point");
+				serializer.attribute(null, "longitude", Double.toString(point.getLongitude()));
+				serializer.attribute(null, "latitude", Double.toString(point.getLatitude()));
+				serializer.endTag(null, "point");
+			}
+
+			serializer.endTag(null, "boundary");
+
+			for (Polygon landmark : plan.landmarks)
+			{
+				serializer.startTag(null, "landmark");
+				serializer.attribute(null, "name", landmark.getName());
+
+				for (LocationPoint point : landmark.points)
+				{
+					serializer.startTag(null, "point");
+					serializer.attribute(null, "longitude", Double.toString(point.getLongitude()));
+					serializer.attribute(null, "latitude", Double.toString(point.getLatitude()));
+					serializer.endTag(null, "point");
+				}
+
+				serializer.endTag(null, "landmark");
+			}
+
+			serializer.endTag(null, "map");
+
+			serializer.endDocument();
+			// write xml data into the FileOutputStream
+			serializer.flush();
+			// finally we close the file stream
+			fileos.close();
+		} catch (Exception e)
+		{
+			// Log.e("Exception", "error occurred while creating xml file");
+		}
+
+	}
+
+	public Plan readFile(String name) throws XmlPullParserException
+	{
+		/*
+		 * try { // ##### Read the file back in #####
+		 * 
+		 * 
+		 * We have to use the openFileInput()-method the ActivityContext
+		 * provides. Again for security reasons with openFileInput(...)
+		 * 
+		 * FileInputStream fIn = context.openFileInput("samplefile.txt");
+		 * InputStreamReader isr = new InputStreamReader(fIn);
+		 * 
+		 * Prepare a char-Array that will hold the chars we read back in.
+		 * 
+		 * char[] inputBuffer = new char[100]; // Fill the Buffer with data from
+		 * the file isr.read(inputBuffer); // Transform the chars to a String
+		 * String readString = new String(inputBuffer);
+		 * 
+		 * } catch (IOException ioe) { ioe.printStackTrace(); }
+		 */
+		Plan map = null;
+		FileInputStream fileis = null;
+		try
+		{
+			fileis = context.openFileInput(name + ".xml");
+		} catch (FileNotFoundException e)
+		{
+			// Log.e("FileNotFoundException", "can't create FileOutputStream");
+		}
+
+		XmlPullParserFactory factory;
+		XmlPullParser xpp = null;
+		try
+		{
+			factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+
+			xpp = factory.newPullParser();
+
+			xpp.setInput(fileis, "UTF-8");
+		} catch (XmlPullParserException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// int a;
+		// try
+		// {
+		// a = xpp.getEventType();
+		// } catch (XmlPullParserException e1)
+		// {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
+		// }
+		// try
+		// {
+		// while ((a=xpp.getEventType())!=XmlPullParser.END_DOCUMENT)
+		// {
+		// a=0;
+		// }
+		// } catch (XmlPullParserException e)
+		// {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		Polygon currentPolygon= null;
+		int eventType = xpp.getEventType();
+		// process tag while not reaching the end of document
+		while (eventType != XmlPullParser.END_DOCUMENT)
+		{
+			switch (eventType)
+			{
+			// at start of document: START_DOCUMENT
+				case XmlPullParser.START_DOCUMENT:
+				{
+					break;
+				}
+
+				// at start of a tag: START_TAG
+				case XmlPullParser.START_TAG:
+				{
+					// get tag name
+					String tagName = xpp.getName();
+					// if <study>, get attribute: 'id'
+					if (tagName.equalsIgnoreCase("map"))
+					{
+						map = new Plan(xpp.getAttributeValue(null, "name"));
+					} else if (tagName.equalsIgnoreCase("boundary"))
+					{
+						currentPolygon=map.boundary=new Polygon(xpp.getAttributeValue(null, "name"));
+					}
+					else if (tagName.equalsIgnoreCase("landmark"))
+					{
+						currentPolygon=new Polygon(xpp.getAttributeValue(null, "name"));
+						map.landmarks.add(currentPolygon);
+					}
+					else if (tagName.equalsIgnoreCase("point"))
+					{
+						currentPolygon.points.add(new LocationPoint(Double.parseDouble(xpp.getAttributeValue(null, "longitude")),Double.parseDouble(xpp.getAttributeValue(null, "latitude"))));
+					}
+					break;
+				}
+			}
+			// jump to next event
+			try
+			{
+				eventType = xpp.next();
+			} catch (XmlPullParserException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return map;
+	}
+
+}
