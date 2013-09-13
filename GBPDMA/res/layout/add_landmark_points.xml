@@ -12,11 +12,12 @@
         android:id="@+id/textInfoInLandmarks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        android:text="Please wait until a GPS lock occur..."
+        android:textSize="15sp" />
 
     <LinearLayout
         android:layout_width="500dp"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textInfoInLandmarks"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
@@ -29,6 +30,14 @@
             android:gravity="center_vertical|center_horizontal"
             android:onClick="addLandmarkPointClicked"
             android:text="Add point to landmark" />
+        
+        <Button
+            android:id="@+id/buttonRemoveLandmarkPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="removeLandmarkPointClicked"
+            android:text="Remove last point from this landmark" />
 
         <Button
             android:id="@+id/buttonNewLandMark"
@@ -39,11 +48,11 @@
             android:text="New landmark" />
         
         <Button
-            android:id="@+id/buttonFinishMap"
+            android:id="@+id/buttonFinishPlan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
-            android:onClick="finishMapClicked"
+            android:onClick="finishPlanClicked"
             android:text="Finish Plan" />
     </LinearLayout>
 

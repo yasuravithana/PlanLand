@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="GBPDMAtest (1)" project="GBPDMAtest" tests="10" started="10" failures="0" errors="0" ignored="0">
+  <testsuite name="htc-htc_wildfire-HT08APY00964" time="0.536">
+    <testsuite name="com.gbpdma.test.LocationPointTest" time="0.047">
+      <testcase name="testLocationPoints " classname="com.gbpdma.test.LocationPointTest" time="0.001"/>
+      <testcase name="testAndroidTestCaseSetupProperly " classname="com.gbpdma.test.LocationPointTest" time="0.046"/>
+    </testsuite>
+    <testsuite name="com.gbpdma.test.MapProcessorTest" time="0.104">
+      <testcase name="testSetCoordinates " classname="com.gbpdma.test.MapProcessorTest" time="0.053"/>
+      <testcase name="testAndroidTestCaseSetupProperly " classname="com.gbpdma.test.MapProcessorTest" time="0.051"/>
+    </testsuite>
+    <testsuite name="com.gbpdma.test.PlanTest" time="0.102">
+      <testcase name="testPlan " classname="com.gbpdma.test.PlanTest" time="0.051"/>
+      <testcase name="testAndroidTestCaseSetupProperly " classname="com.gbpdma.test.PlanTest" time="0.051"/>
+    </testsuite>
+    <testsuite name="com.gbpdma.test.XmlTest" time="0.13">
+      <testcase name="testName " classname="com.gbpdma.test.XmlTest" time="0.053"/>
+      <testcase name="testAndroidTestCaseSetupProperly " classname="com.gbpdma.test.XmlTest" time="0.077"/>
+    </testsuite>
+    <testsuite name="com.gbpdma.test.polygonTest" time="0.153">
+      <testcase name="testPolygon " classname="com.gbpdma.test.polygonTest" time="0.052"/>
+      <testcase name="testAndroidTestCaseSetupProperly " classname="com.gbpdma.test.polygonTest" time="0.101"/>
+    </testsuite>
+  </testsuite>
+</testrun>

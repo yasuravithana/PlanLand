@@ -63,7 +63,7 @@ public class CreatePlan extends Activity implements Observer {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.enter_map_name);
+	setContentView(R.layout.enter_plan_name);
 
 	mapNameBox = (EditText) findViewById(R.id.editText1);
 
@@ -136,6 +136,21 @@ public class CreatePlan extends Activity implements Observer {
 	toast.show();
     }
 
+    // This is the method which handles the event of the user clicking Remove Boundary Point
+    public void removeBoundryPointClicked(View view) {
+	Toast toast;
+	if (plan.boundary.points.size() > 0) {
+	    plan.boundary.points.removeLast();// remove the last point from the list of points of boundary
+	    toast = Toast.makeText(this,
+		    "Point removed from the boundary.", Toast.LENGTH_SHORT);// user notification
+	} else {
+	    toast = Toast.makeText(this,
+		    "No points to remove from the boundary.", Toast.LENGTH_SHORT);// user notification
+	}
+	toast.setGravity(Gravity.CENTER, 0, 0);
+	toast.show();
+    }
+
     // This is the method which handles the event of the user clicking Add Landmarks after entering border points
     public void addLandmarksClicked(View view) {
 	setContentView(R.layout.enter_landmark_name);
@@ -190,6 +205,21 @@ public class CreatePlan extends Activity implements Observer {
 	toast.show();
     }
 
+    // This is the method which handles the event of the user clicking Remove Landmark Point
+    public void removeLandmarkPointClicked(View view) {
+	Toast toast;
+	if (currentPolygon.points.size() > 0) {
+	    currentPolygon.points.removeLast();// remove the last point from the list of points of current landmark
+	    toast = Toast.makeText(this, "Point removed from the landmark.",
+		    Toast.LENGTH_SHORT);// user notification
+	} else {
+	    toast = Toast.makeText(this, "No points to remove from the landmark.",
+		    Toast.LENGTH_SHORT);// user notification
+	}
+	toast.setGravity(Gravity.CENTER, 0, 0);
+	toast.show();
+    }
+
     // This is the method which handles the event of the user clicking New Landmark after done with one landmark. Simply loads the layout to enter landmark name.
     public void newLandmarkClicked(View view) {
 	setContentView(R.layout.enter_landmark_name);
@@ -204,8 +234,7 @@ public class CreatePlan extends Activity implements Observer {
 	toast.setGravity(Gravity.CENTER, 0, 0);
 	toast.show();
 	// Go back to the welcome screen
-	Intent intent = new Intent(this, Welcome.class);
-	startActivity(intent);
+	finish();
     }
 
     @Override

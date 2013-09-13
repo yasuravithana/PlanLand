@@ -13,7 +13,11 @@
         android:id="@+id/textViewInLandmarkName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please enter a name for the landmark." />
+        android:gravity="center_horizontal"
+        android:text="Please enter a name for the landmark."
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextLandmarkName"

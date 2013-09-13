@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CreatePlan" >
+
+    <TextView
+        android:id="@+id/textViewInPlanName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Please enter a name for the plan."
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/textViewInPlanName"
+        android:layout_below="@+id/textViewInPlanName"
+        android:layout_marginTop="32dp"
+        android:ems="10" >
+    </EditText>
+
+    <Button
+        android:id="@+id/buttonNextAfterPlanName"
+        android:layout_width="500dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/editText1"
+        android:layout_below="@+id/editText1"
+        android:layout_marginTop="46dp"
+        android:onClick="nextAfterPlanNameClicked"
+        android:text="Next" >
+
+        <requestFocus />
+	</Button>
+
+</RelativeLayout>

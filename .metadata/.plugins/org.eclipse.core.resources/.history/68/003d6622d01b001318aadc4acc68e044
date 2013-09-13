@@ -1,0 +1,30 @@
+package com.gbpdma.test;
+
+import com.gbpdma.logic.LocationPoint;
+import com.gbpdma.logic.Plan;
+import com.gbpdma.logic.Polygon;
+
+import android.test.AndroidTestCase;
+
+public class polygonTest extends AndroidTestCase {
+	
+	protected void setUp() throws Exception {
+		super.setUp();
+	}
+	
+	public void testPolygon(){
+		LocationPoint point1 = new LocationPoint(79.024587,6.02578);
+		LocationPoint point2 = new LocationPoint(79.025487,6.02578);
+		LocationPoint point3 = new LocationPoint(78.024587,6.02608);
+		
+		LocationPoint point4 = new LocationPoint(79.024587,6.02578);
+		LocationPoint point5 = new LocationPoint(79.025487,6.02578);
+		LocationPoint point6 = new LocationPoint(78.024587,6.02608);
+		Plan plan = new Plan("test");
+		assertNotNull(plan.boundary);
+		assertNotNull(plan.landmarks);
+		assertEquals(0, plan.landmarks.size());
+		plan.landmarks.add(new Polygon("testPoly"));
+		assertEquals(1, plan.landmarks.size());
+	}
+}

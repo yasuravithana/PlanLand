@@ -21,3 +21,7 @@
 1378963605359	Rename local variable 'map'
 1378965362638	Delete element
 1378973189943	Rename field 'map'
+1378987975795	Rename resource 'enter_map_name.xml'
+1378987998891	Rename field 'textViewInMapName'
+1378988064484	Rename field 'buttonNextAfterMapName'
+1378988222081	Rename field 'buttonFinishMap'

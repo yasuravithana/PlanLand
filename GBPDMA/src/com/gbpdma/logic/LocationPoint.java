@@ -4,7 +4,7 @@ package com.gbpdma.logic;
  * @author yasuravithana
  * 
  */
-public class LocationPoint {// thi is the template for a location point
+public class LocationPoint {// this is the template for a location point
 
     private double longitude;// holds the longitude of the point
     private double latitude;// holds the latitude of the point
