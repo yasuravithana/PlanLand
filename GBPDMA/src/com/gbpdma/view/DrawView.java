@@ -1,5 +1,6 @@
 package com.gbpdma.view;
 
+import com.gbpdma.location.GPS;
 import com.gbpdma.logic.LocationPoint;
 import com.gbpdma.logic.Plan;
 import com.gbpdma.logic.MapProcessor;
@@ -42,10 +43,18 @@ public class DrawView extends View implements SensorEventListener {
     Plan plan;// the plan being drawn
     LocationPoint previousPoint;// holds the previous point to connect the next point
 
+    GPS gps; 
+    boolean isTracking = false;
+    LocationPoint currentCenter;
+    
     // constructor
     public DrawView(Context context, Plan map) {
 	super(context);
 	mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+	
+	
+	//GPS object to position map according to the current position
+	gps=new GPS(context);
 
 	// obtain screen size
 	WindowManager wm = (WindowManager) context
@@ -66,24 +75,49 @@ public class DrawView extends View implements SensorEventListener {
 	mSensorManager = (SensorManager) context
 		.getSystemService(context.SENSOR_SERVICE);
 	mCompass = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-	mSensorManager.registerListener(this, mCompass,
-		SensorManager.SENSOR_DELAY_GAME);
-
     }
 
     @Override
     public void onDraw(Canvas canvas) {
 
+	if(isTracking)
+	{
+	// position map to current position
+	currentCenter = new LocationPoint(gps.getLongitude(),gps.getLatitude());
+	MapProcessor.setCoordinates(currentCenter);
+	currentX=screenHalfWidth-currentCenter.getX();
+	currentY=screenHalfHeight-currentCenter.getY();
+	
+	}
+	
 	//positioning the canvas
 	canvas.translate(currentX += (dx) / mScaleFactor, currentY += (dy)
 		/ mScaleFactor);
 	dx = dy = 0;
+
 	//scaling the canvas
 	canvas.scale(mScaleFactor, mScaleFactor, screenHalfWidth - currentX,
 		screenHalfHeight - currentY);
-	//rotating the canvas
-	canvas.rotate(angle);// rotation is done around the center of the boarder as calculated by the MapProcessor
+	
 
+	
+	if(isTracking)
+	{
+	// drawing current location
+	paint.setColor(Color.BLUE);
+	paint.setStrokeWidth(2 / mScaleFactor);
+	paint.setAntiAlias(true);
+	canvas.drawLine(currentCenter.getX() - 5/ mScaleFactor, currentCenter.getY() + 5/ mScaleFactor, currentCenter.getX() + 5/ mScaleFactor, currentCenter.getY() + 5/ mScaleFactor, paint);
+	canvas.drawLine(currentCenter.getX() + 5/ mScaleFactor, currentCenter.getY() + 5/ mScaleFactor, currentCenter.getX(), currentCenter.getY() - 5/ mScaleFactor, paint);
+	canvas.drawLine(currentCenter.getX(), currentCenter.getY() - 5/ mScaleFactor, currentCenter.getX() - 5/ mScaleFactor, currentCenter.getY() + 5/ mScaleFactor, paint);
+	}
+	
+	if(isTracking)
+	{
+	//rotating the canvas
+	canvas.rotate(angle,currentCenter.getX(),currentCenter.getY());// rotation is done around the current position of the device
+	}
+	
 	// drawing boundary
 	paint.setColor(Color.RED);
 	paint.setStrokeWidth(2 / mScaleFactor);
@@ -125,6 +159,8 @@ public class DrawView extends View implements SensorEventListener {
 	// Let the ScaleGestureDetector inspect all events.
 	mScaleDetector.onTouchEvent(ev);
 
+	if(!isTracking)
+	{
 	if (ev.getActionMasked() == MotionEvent.ACTION_DOWN) {//when user touches
 	    //setting the reference xy values
 	    refx = ev.getRawX();
@@ -141,7 +177,16 @@ public class DrawView extends View implements SensorEventListener {
 	    refy = ev.getRawY();
 	    invalidate();// mark that a redraw is necessary
 	}
+	}
 	return true;
+    }
+    
+    public void resumeCompass() {
+	mSensorManager.registerListener(this, mCompass, SensorManager.SENSOR_DELAY_GAME);
+    }
+    
+    public void pauseCompass() {
+	mSensorManager.unregisterListener(this);
     }
 
     @Override

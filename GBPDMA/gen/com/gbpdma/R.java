@@ -43,6 +43,7 @@ public final class R {
         public static final int editTextLandmarkName=0x7f09000f;
         public static final int group1=0x7f090015;
         public static final int linearLayout1=0x7f090005;
+        public static final int mode=0x7f090017;
         public static final int selectFileMenu_delete=0x7f090016;
         public static final int textInfo=0x7f090004;
         public static final int textInfoInLandmarks=0x7f090009;
@@ -63,7 +64,8 @@ public final class R {
         public static final int main=0x7f080000;
         public static final int select_file=0x7f080001;
         public static final int select_file_menu=0x7f080002;
-        public static final int welcome=0x7f080003;
+        public static final int view_map=0x7f080003;
+        public static final int welcome=0x7f080004;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
